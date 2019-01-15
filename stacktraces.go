@@ -18,6 +18,12 @@ func callers(skip int) []uintptr {
 	return s[:runtime.Callers(2+skip, s)]
 }
 
+func GetStackTrace(skip int) string {
+	var buf bytes.Buffer
+	printStack(&buf, callers(skip))
+	return buf.String()
+}
+
 func printStack(w io.Writer, stack []uintptr) {
 	home := os.Getenv("HOME")
 	usr, err := user.Current()
